@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "7bf58690-818e-4655-a84a-a0fa01d7514a"
+      }
+    },
+    "android": {
+      "package": "com.mindbreak.todoapp"
+    }
+  }
+}
