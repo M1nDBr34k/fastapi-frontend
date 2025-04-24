@@ -144,17 +144,7 @@ export default function App() {
           options={({ navigation }) => ({
             headerRight: () => (
               <View style={styles.headerRight}>
-                <TouchableOpacity 
-                  onPress={() => navigation.navigate('AddTask')}
-                  style={[styles.addButton, isDarkMode ? styles.darkAddButton : styles.lightAddButton]}
-                  activeOpacity={0.7}
-                >
-                  <Ionicons 
-                    name="add" 
-                    size={24} 
-                    color={isDarkMode ? '#fff' : '#000'} 
-                  />
-                </TouchableOpacity>
+                {/* Removed add button as per request */}
                 <Animated.View style={[styles.themeToggleContainer, { transform: [{ rotate: spin }] }]}>
                   <TouchableOpacity 
                     onPress={toggleDarkMode} 

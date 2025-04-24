@@ -1,5 +1,6 @@
 // ListTasksScreen.jsx
-import React, { useCallback, memo } from 'react';
+import React, { useCallback, memo, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -22,6 +23,28 @@ const ListTasksScreen = ({
   isDarkMode,
 }) => {
   const listName = route.params?.listName ?? 'General List';
+
+  // Define categories array as user confirmed
+  const categories = [
+    { name: 'Wish List' },
+    { name: 'Go to List' },
+    { name: 'Shopping List' },
+  ];
+
+  const [categorizedData, setCategorizedData] = useState([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const updated = categories.map((cat) => {
+        const count = cat.name === 'General List'
+          ? tasks.length
+          : tasks.filter((t) => t.category === cat.name).length;
+
+        return { ...cat, count };
+      });
+      setCategorizedData(updated);
+    }, [tasks])
+  );
 
   /* --- filter the tasks that belong to this list --- */
   const listTasks = tasks.filter((t) =>

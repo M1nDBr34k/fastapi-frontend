@@ -38,24 +38,29 @@ const MainScreen = ({
   // card width so exactly 2 per row incl. gaps
   const CARD_WIDTH = (width - CARD_GAP * 3) / 2;
 
-  const categories = [
-    { name: 'General List', icon: 'list', count: tasks.length },
-    {
-      name: 'Wish List',
-      icon: 'heart',
-      count: tasks.filter((t) => t.category === 'Wish').length,
-    },
-    {
-      name: 'Go to List',
-      icon: 'location',
-      count: tasks.filter((t) => t.category === 'Go').length,
-    },
-    {
-      name: 'Shopping List',
-      icon: 'cart',
-      count: tasks.filter((t) => t.category === 'Shopping').length,
-    },
-  ];
+const getCountByCategory = (catName) => {
+  if (catName === 'General List') {
+    return tasks.length;
+  }
+  // Use full category names consistently
+  return tasks.filter((t) => t.category === catName).length;
+};
+
+const categories = [
+  { name: 'General List', icon: 'list' },
+  { name: 'Wish List', icon: 'heart' },
+  { name: 'Go to List', icon: 'location' },
+  { name: 'Shopping List', icon: 'cart' },
+];
+
+const categorizedData = categories.map((cat) => {
+  const count =
+    cat.name === 'General List'
+      ? tasks.length
+      : tasks.filter((t) => t.category === cat.name).length;
+
+  return { ...cat, count };
+});
 
   const renderCategoryCard = ({ item }) => (
     <TouchableOpacity
@@ -133,7 +138,7 @@ const MainScreen = ({
 
       {/* Category grid */}
       <FlatList
-        data={categories}
+      data={categorizedData}
         renderItem={renderCategoryCard}
         keyExtractor={(item) => item.name}
         numColumns={2}
